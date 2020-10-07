@@ -8,11 +8,12 @@ from .models import Task
 from rest_framework import viewsets
 from .serializers import TaskSerializer
 from .serializers import UserSerializer
+from .ownpermissions import ProfilePermission
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (ProfilePermission,)
 
 class ManageUserView(generics.RetrieveUpdateAPIView):
     serializer_class = UserSerializer
@@ -26,4 +27,4 @@ class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
     authentication_classes = (TokenAuthentication,)
-    permission_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
